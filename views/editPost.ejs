@@ -1,4 +1,5 @@
 <%- include("./includes/head") %>
+
     <section class="mx-auto">
       <a href="/">Go back home</a>
       <h1 class="title">Add a new post here!</h1>
@@ -10,7 +11,7 @@
         </div>
         <div>
           <label for="photo">Enter photo</label>
-          <input type="text" id="photo" name="photo" required value="<%= post.imgUrl %>"/>
+          <input type="text" id="photo" name="photo" value="<%= post.imgUrl %>" required />
         </div>
         <div>
           <label for="description">Enter description</label>
