@@ -34,12 +34,12 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  User.findById("6694a73ab8e4d6e419b9aa41").then((user) => {
-    req.user = user;
-    next();
-  });
-});
+// app.use((req, res, next) => {
+//   User.findById("6694a73ab8e4d6e419b9aa41").then((user) => {
+//     req.user = user;
+//     next();
+//   });
+// });
 
 app.use("/admin", adminRoutes);
 app.use(postRoutes);
@@ -50,16 +50,5 @@ mongoose
   .then((_) => {
     app.listen(8080);
     console.log("connected to mongodb!!!");
-    return User.findOne().then((user) => {
-      if (!user) {
-        User.create({
-          username: "coder",
-          email: "codehub@gmail.com",
-          password: "abcdefg",
-        });
-      }
-      return user;
-    });
   })
-  .then((result) => console.log(result))
   .catch((err) => console.log(err));
