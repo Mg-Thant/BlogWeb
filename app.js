@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const session = require("express-session");
 const mongoStore = require("connect-mongodb-session")(session);
+const csurf = require("csurf")
 dotenv.config();
 
 const app = express();
@@ -21,7 +22,11 @@ const store = new mongoStore({
   collection: "sessions-db",
 });
 
+const csurfProtect = csurf();
+
 const User = require("./models/user");
+const { isLogin } = require("./middleware/isLogin");
+
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -33,15 +38,26 @@ app.use(
     store,
   })
 );
+app.use(csurfProtect);
 
-// app.use((req, res, next) => {
-//   User.findById("6694a73ab8e4d6e419b9aa41").then((user) => {
-//     req.user = user;
-//     next();
-//   });
-// });
+app.use((req, res, next) => {
+  if(req.session.isLogin  === undefined) {
+    return next();
+  }
+  User.findById(req.session.userInfo._id).select("_id email").then((user) => {
+    req.user = user;
+    next();
+  });
+});
 
-app.use("/admin", adminRoutes);
+// csrf token to every rendering page
+app.use((req, res, next) => {
+  res.locals.isLogin = req.session.isLogin ? true : false;
+  res.locals.csrfToken = req.csrfToken();
+  next();
+})
+
+app.use("/admin",isLogin, adminRoutes);
 app.use(postRoutes);
 app.use(authRoutes);
 
