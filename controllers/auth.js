@@ -2,11 +2,23 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 
 exports.renderRegisterPage = (req, res) => {
-  res.render("auth/register", { title: "Register" });
+  let err_message = req.flash("error");
+  if (err_message.length > 0) {
+    err_message = err_message[0];
+  } else {
+    err_message = null;
+  }
+  res.render("auth/register", { title: "Register", errorMsg: err_message });
 };
 
 exports.renderLoginPage = (req, res) => {
-  res.render("auth/login", { title: "Login" });
+  let err_message = req.flash("error");
+  if (err_message.length > 0) {
+    err_message = err_message[0];
+  } else {
+    err_message = null;
+  }
+  res.render("auth/login", { title: "Login", errorMsg: err_message });
 };
 
 exports.registerData = (req, res) => {
@@ -14,6 +26,7 @@ exports.registerData = (req, res) => {
   User.findOne({ email })
     .then((user) => {
       if (user) {
+        req.flash("error", "Check your information. Change anoter information!!!");
         return res.redirect("/register");
       }
       return bcrypt
@@ -36,6 +49,7 @@ exports.postLoginData = (req, res) => {
   User.findOne({ email })
     .then((user) => {
       if (!user) {
+        req.flash("error", "Check your information, try again");
         return res.redirect("/login");
       }
       bcrypt

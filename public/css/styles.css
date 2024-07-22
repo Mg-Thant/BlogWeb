@@ -64,3 +64,11 @@ button,
 .details p {
   font-size: 17px;
 }
+
+.error-msg {
+  text-align: center;
+  color: black;
+  border: 1px solid red;
+  background-color: rgb(231, 110, 110);
+  padding: 4px 8px;
+}

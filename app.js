@@ -5,7 +5,8 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const session = require("express-session");
 const mongoStore = require("connect-mongodb-session")(session);
-const csurf = require("csurf")
+const csurf = require("csurf");
+const flash = require("connect-flash");
 dotenv.config();
 
 const app = express();
@@ -39,6 +40,7 @@ app.use(
   })
 );
 app.use(csurfProtect);
+app.use(flash());
 
 app.use((req, res, next) => {
   if(req.session.isLogin  === undefined) {
