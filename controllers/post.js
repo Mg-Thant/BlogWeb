@@ -61,7 +61,6 @@ exports.updatePost = (req, res) => {
       return post.save();
     })
     .then(() => {
-      console.log("Post Updated");
       res.redirect("/");
     })
     .catch((err) => console.log(err));
@@ -71,7 +70,6 @@ exports.deletePost = (req, res) => {
   const { postId } = req.params;
   Post.findByIdAndRemove(postId)
     .then(() => {
-      console.log("Post Deleted!!");
       res.redirect("/");
     })
     .catch((err) => console.log(err));
