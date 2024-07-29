@@ -18,7 +18,7 @@ exports.renderCreatePage = (req, res) => {
 exports.renderHomePage = (req, res) => {
   // const cookie = req.get("Cookie").split("=")[1].trim() === "true";
   Post.find()
-    .select("title")
+    .select("title description")
     .populate("userId", "email")
     .sort({ title: -1 })
     .then((posts) => {

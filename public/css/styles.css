@@ -1,5 +1,16 @@
-.title {
+.header {
   text-align: center;
+  margin-top: 20px;
+  margin-bottom: 25px;
+  padding: 0 20px;
+}
+
+.header h1 {
+  font-size: 30px;
+}
+
+.header p {
+  font-size: 22px;
 }
 .description {
   color: red;
@@ -13,6 +24,32 @@ a {
   padding: 8px 10px;
   width: fit-content;
   text-decoration: none;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+}
+
+.header-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+}
+
+.header-btn .btn {
+  width: fit-content;
+  padding: 9px 12px;
+}
+
+button {
+  border: none;
+  outline: none;
+  border-radius: 4px;
+}
+
+.title {
+  font-size: 25px;
+  padding: 0 20px; 
 }
 label {
   display: block;
@@ -39,6 +76,11 @@ button,
   width: 40%;
   margin: auto auto;
 }
+
+.form-box {
+  width: 96%;
+}
+
 .post-box {
   border: 1px solid black;
   padding: 10px 20px;
@@ -47,13 +89,33 @@ button,
   align-items: center;
   justify-content: space-between;
 }
+
+.post-inner {
+  width: 90%;
+}
+
 .post-title {
   font-size: 20px;
   text-transform: uppercase;
   font-weight: 600;
 }
+
+.post-email {
+  font-weight: bold;
+}
+
+.details {
+  width: 65%;
+}
+
+.details-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between
+}
+
 .details h1 {
-  text-align: center;
+  text-align: left;
   margin: 20px 0;
 }
 .details img {
@@ -61,8 +123,14 @@ button,
   height: 30rem;
   object-fit: cover;
 }
+
+.details hr {
+  margin: 20px 0;
+}
+
 .details p {
-  font-size: 17px;
+  font-size: 19px;
+  text-align: justify;
 }
 
 .error-msg {
@@ -71,4 +139,11 @@ button,
   border: 1px solid red;
   background-color: rgb(231, 110, 110);
   padding: 4px 8px;
+}
+
+.login-div, .login-div div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
 }
