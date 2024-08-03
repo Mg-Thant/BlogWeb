@@ -6,15 +6,17 @@
         <p class="error-msg"><%= errorMsg %></p>
       <% } %>
       <form action="/register" method="post">
-        <input type="text" value="<%= csrfToken %>" name="_csrf" hidden>
-        <div>
-          <label for="email">Enter email</label>
-          <input type="text" id="email" name="email" />
-        </div>
-        <div>
-            <label for="password">Enter password</label>
-            <input type="password" id="password" name="password" />
+        <div class="form-box">
+          <input type="text" value="<%= csrfToken %>" name="_csrf" hidden>
+          <div>
+            <label for="email">Enter email</label>
+            <input type="text" id="email" name="email" value="<%= oldData.email %>"/>
           </div>
+          <div>
+            <label for="password">Enter password</label>
+            <input type="password" id="password" name="password" value="<%= oldData.password %>"/>
+          </div>
+        </div>
         <button>Create account</button>
       </form>
     </section>

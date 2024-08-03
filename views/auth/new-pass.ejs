@@ -6,17 +6,19 @@
         <p class="error-msg"><%= errorMsg %></p>
       <% } %>
       <form action="/change-password" method="post">
-        <input type="text" value="<%= csrfToken %>" name="_csrf" hidden>
-        <input type="text" value="<%= resetToken %>" name="resetToken" hidden>
-        <input type="text" value="<%= user_id %>" name="user_id" hidden>
-        <div>
-          <label for="password">Enter new password</label>
-          <input type="password" id="password" name="password" />
-        </div>
-        <div>
-            <label for="confirm_password">Confirm password</label>
-            <input type="password" id="confirm_password" name="confirm_password" />
+        <div class="form-box">
+          <input type="text" value="<%= csrfToken %>" name="_csrf" hidden>
+          <input type="text" value="<%= resetToken %>" name="resetToken" hidden>
+          <input type="text" value="<%= user_id %>" name="user_id" hidden>
+          <div>
+            <label for="password">Enter new password</label>
+            <input type="password" id="password" name="password" value="<%= oldData.password %>" />
           </div>
+          <div>
+            <label for="confirm_password">Confirm password</label>
+            <input type="password" id="confirm_password" name="confirm_password" value="<%= oldData.confirm_password %>" />
+          </div>
+        </div>
         <button>Change password</button>
       </form>
     </section>

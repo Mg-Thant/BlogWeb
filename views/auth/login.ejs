@@ -7,17 +7,19 @@
       <% } %>
       <form action="/login" method="post">
         <input type="text" value="<%= csrfToken %>" name="_csrf" hidden>
-        <div>
-          <label for="email">Enter email</label>
-          <input type="text" id="email" name="email" />
-        </div>
-        <div>
-            <label for="password">Enter password</label>
-            <input type="password" id="password" name="password" />
+        <div class="form-box">
+          <div>
+            <label for="email">Enter email</label>
+            <input type="text" id="email" name="email" value="<%= oldData.email %>"/>
           </div>
-          <a href="/reset-password">Forgot Password?</a>
+          <div>
+            <label for="password">Enter password</label>
+            <input type="password" id="password" name="password" value="<%= oldData.password %>"/>
+          </div>
+            <a href="/reset-password">Forgot Password?</a>
+        </div>
         <button>Login account</button>
       </form>
     </section>
   </body>
-  <%- include("../includes/foot") %>
+<%- include("../includes/foot") %>
