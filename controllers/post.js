@@ -1,7 +1,17 @@
 const Post = require("../models/post");
+const { validationResult } = require("express-validator");
+const formatISO9075 = require('date-fns/formatISO9075');
 
 exports.createPost = (req, res) => {
   const { title, description, photo } = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).render("addPost", {
+      title: "Post create",
+      errorMsg: errors.array()[0].msg,
+      oldData: { title, description, photo },
+    });
+  }
   Post.create({ title, description, imgUrl: photo, userId: req.user })
     .then((result) => {
       console.log(result);
@@ -12,7 +22,11 @@ exports.createPost = (req, res) => {
 
 exports.renderCreatePage = (req, res) => {
   // res.sendFile(path.join(__dirname, "..", "views", "addPost.html"));
-  res.render("addPost", { title: "Post create ml" });
+  res.render("addPost", {
+    title: "Post create ml",
+    errorMsg: "",
+    oldData: { title: "", description: "", photo: "" },
+  });
 };
 
 exports.renderHomePage = (req, res) => {
@@ -35,10 +49,12 @@ exports.renderHomePage = (req, res) => {
 exports.getPost = (req, res) => {
   const postId = req.params.postId;
   Post.findById(postId)
+    .populate("userId", "email")
     .then((post) => {
       res.render("details", {
         title: post.title,
         post,
+        date : post.createdAt ? formatISO9075(post.createdAt, {representation: "date"}) : undefined,
         loginUserId: req.session.userInfo ? req.session.userInfo._id : " ",
       });
     })
@@ -52,13 +68,33 @@ exports.getEditPost = (req, res) => {
       if (!post) {
         return res.redirect("/");
       }
-      res.render("editPost", { title: post.title, post });
+      res.render("editPost", {
+        title: "Edit Post",
+        post,
+        oldData: { title: "", description: "", photo: "" },
+        isValidationFail: false,
+        errorMsg: "",
+      });
     })
     .catch((err) => console.log(err));
 };
 
 exports.updatePost = (req, res) => {
   const { postId, title, description, photo } = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).render("editPost", {
+      postId,
+      title,
+      oldData: {
+        title,
+        description,
+        photo,
+      },
+      isValidationFail: true,
+      errorMsg: errors.array()[0].msg,
+    });
+  }
 
   Post.findById(postId)
     .then((post) => {

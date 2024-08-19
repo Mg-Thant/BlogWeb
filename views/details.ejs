@@ -4,10 +4,14 @@
     <h1><%= post.title %></h1>
     <a href="/">Go back home</a>
   </div>
+  <p class="ctl">Post By: <%= post.userId.email %></p>
+  <% if(date) { %>
+    <p class="ctl">Upload at: <%= date %></p>
+  <% } %>
   <img src="<%= post.imgUrl %>" alt="<%= post.title %>" />
   <hr />
   <p><%= post.description %></p>
-  <% if(post.userId.toString() === loginUserId.toString()) { %>
+  <% if(post.userId._id.toString() === loginUserId.toString()) { %>
   <a href="/admin/edit/<%= post._id %>" class="btn-full">Edit</a>
   <form action="/admin/delete/<%= post._id %>" method="post">
     <input type="text" value="<%= csrfToken %>" name="_csrf" hidden />

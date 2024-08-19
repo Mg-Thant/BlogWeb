@@ -147,3 +147,13 @@ button,
   justify-content: flex-start;
   gap: 8px;
 }
+
+.form-title {
+  text-align: center;
+  font-size: 30px;
+}
+
+.ctl {
+  margin: 5px 0;
+  font-weight: 600;
+}
