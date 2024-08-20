@@ -1,12 +1,12 @@
 <%- include("./includes/head") %>
-<section class="details mx-auto">
+<section class="details mx-auto roboto-medium">
   <div class="details-box">
     <h1><%= post.title %></h1>
-    <a href="/">Go back home</a>
+    <a href="/"><i class="fa-solid fa-arrow-left-long icon"></i>Go back home</a>
   </div>
   <p class="ctl">Post By: <%= post.userId.email %></p>
   <% if(date) { %>
-    <p class="ctl">Upload at: <%= date %></p>
+  <p class="ctl">Upload at: <%= date %></p>
   <% } %>
   <img src="<%= post.imgUrl %>" alt="<%= post.title %>" />
   <hr />

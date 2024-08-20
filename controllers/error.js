@@ -3,5 +3,5 @@ exports.get404Page = (req, res) => {
 };
 
 exports.get500Page = (err, req, res, next) => {
-  res.stauts(500).render("error/500", { title: "Post Not Found", message: err.message });
+  res.status(500).render("error/500", { title: "Post Not Found", message: err.message });
 };

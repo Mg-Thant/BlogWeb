@@ -1,6 +1,6 @@
 const Post = require("../models/post");
 const { validationResult } = require("express-validator");
-const formatISO9075 = require('date-fns/formatISO9075');
+const { formatISO9075 } = require("date-fns");
 
 exports.createPost = (req, res, next) => {
   const { title, description, photo } = req.body;

@@ -1,5 +1,5 @@
 <%- include("./includes/head") %>
-<section class="header">
+<section class="header roboto-medium">
   <h1 class="title">Blog.io</h1>
   <p>
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad dignissimos
@@ -14,38 +14,43 @@
   </p>
 </section>
 <% if(isLogin) { %>
-<div class="header-btn">
+<div class="header-btn roboto-medium">
   <a href="/admin/create-post"
-    >Add a new post as <%= userEmail ? userEmail : " " %></a
+    ><i class="fa-regular fa-square-plus icon"></i>Add a new post as <%= userEmail ?
+    userEmail : " " %></a
   >
   <form action="/logout" method="post">
     <input type="text" value="<%= csrfToken %>" name="_csrf" hidden />
-    <button class="btn">Logout</button>
+    <button class="btn"><i class="fa-solid fa-arrow-right-from-bracket icon"></i>Logout</button>
   </form>
 </div>
 <% } else { %>
-<div class="login-div">
+<div class="login-div roboto-medium">
   <div>
-    <a href="/login">Login to existing account</a>
-    <a href="/register">Create account</a>
+    <a href="/login"
+      ><i class="fa-solid fa-user-check icon"></i>Login to existing account</a
+    >
+    <a href="/register"
+      ><i class="fa-solid fa-user-plus icon"></i>Create account</a
+    >
   </div>
 </div>
 <% } %>
 <hr />
-<h1 class="title">Recents Posts</h1>
+<h1 class="title roboto-medium">Recents Posts</h1>
 <% if(postsArr.length === 0 && isLogin) { %>
-<div>
+<div class="roboto-medium">
   <h4>Nothing to see ?</h4>
   <p>Create a new post now !!!</p>
   <a href="/admin/create-post">Create a new post</a>
 </div>
 <% } %> <% for(let post of postsArr) { %>
-<div class="post-box">
+<div class="post-box roboto-medium">
   <div class="post-inner">
     <p class="post-title"><%= post.title %></p>
     <p class="post-description"><%= post.description.substr(1, 500) %>...</p>
     <p class="post-email">Post by: <%= post.userId.email %></p>
   </div>
-  <a href="/post/<%= post._id %>">See More...</a>
+  <a href="/post/<%= post._id %>">See more...</a>
 </div>
 <% } %> <%- include("./includes/foot") %>

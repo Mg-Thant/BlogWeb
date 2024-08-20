@@ -1,7 +1,7 @@
 <%- include("../includes/head") %>
-    <section class="mx-auto">
+    <section class="mx-auto roboto-medium">
       <a href="/">Go back home</a>
-      <h1 class="title">Login account here...</h1>
+      <h1 class="title form-title">Login account here...</h1>
       <% if(errorMsg) { %>
         <p class="error-msg"><%= errorMsg %></p>
       <% } %>
@@ -10,11 +10,17 @@
         <div class="form-box">
           <div>
             <label for="email">Enter email</label>
-            <input type="text" id="email" name="email" value="<%= oldData.email %>"/>
+            <div class="input-container">
+              <i class="fa-solid fa-envelope input-icon"></i>
+              <input type="text" id="email" name="email" value="<%= oldData.email %>"/>
+            </div>
           </div>
           <div>
             <label for="password">Enter password</label>
-            <input type="password" id="password" name="password" value="<%= oldData.password %>"/>
+            <div class="input-container">
+              <i class="fa-solid fa-lock input-icon"></i>
+              <input type="password" id="password" name="password" value="<%= oldData.password %>"/>
+            </div>
           </div>
             <a href="/reset-password">Forgot Password?</a>
         </div>
