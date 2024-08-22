@@ -5,17 +5,17 @@
       <% if(errorMsg) { %>
         <p class="error-msg"><%= errorMsg %></p>
       <% } %>
-      <form action="/admin/edit-post" method="post" novalidate>
+      <form action="/admin/edit-post" method="post" enctype="multipart/form-data">
         <div class="form-box">
           <input type="text" value="<%= csrfToken %>" name="_csrf" hidden>
           <input type="text" value="<%= isValidationFail ? postId : post._id %>" name="postId" hidden>
-          <div>
+          <div class="bd-ctl">
             <label for="title">Enter title</label>
             <input type="text" id="title" name="title" value="<%= isValidationFail ? oldData.title : post.title %>" required />
           </div>
-          <div>
+          <div class="bd-ctl">
             <label for="photo">Enter photo</label>
-            <input type="text" id="photo" name="photo" value="<%= isValidationFail ? oldData.imgUrl : post.imgUrl %>" required />
+            <input type="file" id="photo" name="photo" />
           </div>
           <div>
             <label for="description">Enter description</label>

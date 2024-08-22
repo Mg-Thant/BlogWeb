@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,700&display=swap");
 
 .roboto-regular {
   font-family: "Roboto", sans-serif;
@@ -115,8 +115,8 @@ button,
   width: 96%;
 }
 
-.form-box input, .form-box textarea {
-  border: 1px solid #000;
+.form-box input,
+.form-box textarea {
   width: 100%;
 }
 
@@ -225,7 +225,7 @@ button,
   margin-top: 9px;
   margin-bottom: 15px;
   border: 1px solid #000;
-  width: fit-content;
+  width: 104%;
 }
 
 input {
@@ -242,4 +242,24 @@ input {
   min-width: 50px;
   text-align: center;
   font-size: 25px;
+}
+
+.no-post {
+  margin: 12px auto;
+  width: fit-content;
+}
+
+.no-post h4 {
+  font-size: 26px;
+  margin-bottom: -8px;
+}
+
+.bd-ctl input {
+  border: 1px solid #000;
+  padding: 8px 5px;
+  width: 102%;
+}
+
+.bd-ctl ~ div textarea, .bd-ctl input {
+  margin: 4px 0 0 0;
 }

@@ -3,16 +3,26 @@ const { validationResult } = require("express-validator");
 const { formatISO9075 } = require("date-fns");
 
 exports.createPost = (req, res, next) => {
-  const { title, description, photo } = req.body;
+  const { title, description } = req.body;
+  const image = req.file;
   const errors = validationResult(req);
+
+  if(image === undefined) {
+    return res.status(422).render("addPost", {
+      title: "Post create",
+      errorMsg: "Image extension must be jpg,jpeg and png",
+      oldData: { title, description },
+    });
+  }
+
   if (!errors.isEmpty()) {
     return res.status(422).render("addPost", {
       title: "Post create",
       errorMsg: errors.array()[0].msg,
-      oldData: { title, description, photo },
+      oldData: { title, description },
     });
   }
-  Post.create({ title, description, imgUrl: photo, userId: req.user })
+  Post.create({ title, description, imgUrl: image.path, userId: req.user })
     .then((result) => {
       console.log(result);
       res.redirect("/");
@@ -83,7 +93,7 @@ exports.getEditPost = (req, res, next) => {
       res.render("editPost", {
         title: "Edit Post",
         post,
-        oldData: { title: "", description: "", photo: "" },
+        oldData: { title: "", description: "" },
         isValidationFail: false,
         errorMsg: "",
       });
@@ -96,8 +106,10 @@ exports.getEditPost = (req, res, next) => {
 };
 
 exports.updatePost = (req, res, next) => {
-  const { postId, title, description, photo } = req.body;
+  const { postId, title, description } = req.body;
+  const image = req.file;
   const errors = validationResult(req);
+
   if (!errors.isEmpty()) {
     return res.status(422).render("editPost", {
       postId,
@@ -105,7 +117,6 @@ exports.updatePost = (req, res, next) => {
       oldData: {
         title,
         description,
-        photo,
       },
       isValidationFail: true,
       errorMsg: errors.array()[0].msg,
@@ -119,7 +130,9 @@ exports.updatePost = (req, res, next) => {
       }
       post.title = title;
       post.description = description;
-      post.imgUrl = photo;
+      if(image) {
+        post.imgUrl = image.path;
+      }
       return post.save().then(() => {
         res.redirect("/");
       });
