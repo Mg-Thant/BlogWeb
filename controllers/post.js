@@ -1,13 +1,18 @@
 const Post = require("../models/post");
 const { validationResult } = require("express-validator");
 const { formatISO9075 } = require("date-fns");
+const PDFDocument = require("pdfkit");
+const fs = require("fs");
+const expressPath = require("path");
+
+const fileDel = require("../utils/fileDel");
 
 exports.createPost = (req, res, next) => {
   const { title, description } = req.body;
   const image = req.file;
   const errors = validationResult(req);
 
-  if(image === undefined) {
+  if (image === undefined) {
     return res.status(422).render("addPost", {
       title: "Post create",
       errorMsg: "Image extension must be jpg,jpeg and png",
@@ -72,7 +77,9 @@ exports.getPost = (req, res, next) => {
       res.render("details", {
         title: post.title,
         post,
-        date : post.createdAt ? formatISO9075(post.createdAt, {representation: "date"}) : undefined,
+        date: post.createdAt
+          ? formatISO9075(post.createdAt, { representation: "date" })
+          : undefined,
         loginUserId: req.session.userInfo ? req.session.userInfo._id : " ",
       });
     })
@@ -130,7 +137,8 @@ exports.updatePost = (req, res, next) => {
       }
       post.title = title;
       post.description = description;
-      if(image) {
+      if (image) {
+        fileDel(post.imgUrl);
         post.imgUrl = image.path;
       }
       return post.save().then(() => {
@@ -146,7 +154,11 @@ exports.updatePost = (req, res, next) => {
 
 exports.deletePost = (req, res, next) => {
   const { postId } = req.params;
-  Post.deleteOne({ _id: postId, userId: req.user._id })
+  Post.findById(postId)
+    .then((post) => {
+      fileDel(post.imgUrl);
+      return Post.deleteOne({ _id: postId, userId: req.user._id });
+    })
     .then(() => {
       res.redirect("/");
     })
@@ -154,5 +166,55 @@ exports.deletePost = (req, res, next) => {
       console.log(err);
       const error = new Error("Something went wrong");
       return next(error);
+    });
+};
+
+exports.savePostPDF = (req, res) => {
+  const { id } = req.params;
+  Post.findById(id)
+    .populate("userId", "email")
+    .then((post) => {
+      const url = `${expressPath.join(
+        __dirname,
+        "../public/pdf",
+        new Date().getTime() + ".pdf"
+      )}`;
+      const doc = new PDFDocument();
+      const writeStream = fs.createWriteStream(url);
+      doc.pipe(writeStream);
+
+      // add Title
+      doc.font("Helvetica-Bold").fontSize(20).text(post.title, { align: "center" });
+
+      // add Image
+      doc.image(post.imgUrl, 50, 130, {
+        fit: [500, 250],
+        align: "center",
+        valign: "center",
+      });
+
+      // add Author
+      doc.moveDown();
+      doc.font("Helvetica").fontSize(14).text(`Post By: ${post.userId.email}`, 75, 400,  { align: "left" });
+
+      // add Description
+      doc.moveDown();
+      doc.font("Helvetica").fontSize(12).text(post.description, 75, 430, { align: "justify" });
+
+      // finialize PDF file
+      doc.end();
+
+      writeStream.on("finish", () => {
+        res.download(url, (err) => {
+          if (err) {
+            res.status(500).send("Error Downloading PDF file");
+          }
+          fileDel(url);
+        });
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("Error generting PDF file");
     });
 };

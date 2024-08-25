@@ -4,8 +4,6 @@ const dotenv = require("dotenv");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const { validationResult } = require("express-validator");
-const { error } = require("console");
-const { title } = require("process");
 dotenv.config();
 
 const transporter = nodemailer.createTransport({
