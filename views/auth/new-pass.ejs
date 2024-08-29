@@ -10,11 +10,11 @@
           <input type="text" value="<%= csrfToken %>" name="_csrf" hidden>
           <input type="text" value="<%= resetToken %>" name="resetToken" hidden>
           <input type="text" value="<%= user_id %>" name="user_id" hidden>
-          <div>
+          <div class="bd-ctl">
             <label for="password">Enter new password</label>
             <input type="password" id="password" name="password" value="<%= oldData.password %>" />
           </div>
-          <div>
+          <div class="bd-ctl">
             <label for="confirm_password">Confirm password</label>
             <input type="password" id="confirm_password" name="confirm_password" value="<%= oldData.confirm_password %>" />
           </div>

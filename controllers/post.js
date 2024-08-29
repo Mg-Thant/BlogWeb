@@ -6,6 +6,7 @@ const fs = require("fs");
 const expressPath = require("path");
 
 const fileDel = require("../utils/fileDel");
+const errorController = require("./error");
 
 exports.createPost = (req, res, next) => {
   const { title, description } = req.body;
@@ -50,17 +51,37 @@ exports.renderCreatePage = (req, res) => {
 
 exports.renderHomePage = (req, res, next) => {
   // const cookie = req.get("Cookie").split("=")[1].trim() === "true";
+  const POST_PER_PAGE = 3;
+  const page_num = +req.query.page || 1;
+  let countPost;
   Post.find()
-    .select("title description")
-    .populate("userId", "email")
-    .sort({ title: -1 })
+    .countDocuments()
+    .then((totalPost) => {
+      countPost = totalPost;
+      if (page_num > countPost) {
+        return res.status(404).render("error/404", { title: "Page Not Found" });
+      } else {
+        return Post.find()
+          .select("title description")
+          .populate("userId", "email")
+          .skip((page_num - 1) * POST_PER_PAGE)
+          .limit(POST_PER_PAGE)
+          .sort({ createdAt: -1 });
+      }
+    })
     .then((posts) => {
-      console.log(posts);
-      res.render("home", {
-        title: "Homepage",
-        postsArr: posts,
-        userEmail: req.session.userInfo ? req.session.userInfo.email : " ",
-      });
+      if(!res.headersSent) {
+        return res.render("home", {
+          title: "Homepage",
+          postsArr: posts,
+          userEmail: req.session.userInfo ? req.session.userInfo.email : " ",
+          currentPage: page_num,
+          hasNextPage: POST_PER_PAGE * page_num < countPost,
+          hasPreviousPage: page_num > 1,
+          nextPage: page_num + 1,
+          previousPage: page_num - 1,
+        });
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -184,7 +205,10 @@ exports.savePostPDF = (req, res) => {
       doc.pipe(writeStream);
 
       // add Title
-      doc.font("Helvetica-Bold").fontSize(20).text(post.title, { align: "center" });
+      doc
+        .font("Helvetica-Bold")
+        .fontSize(20)
+        .text(post.title, { align: "center" });
 
       // add Image
       doc.image(post.imgUrl, 50, 130, {
@@ -195,11 +219,17 @@ exports.savePostPDF = (req, res) => {
 
       // add Author
       doc.moveDown();
-      doc.font("Helvetica").fontSize(14).text(`Post By: ${post.userId.email}`, 75, 400,  { align: "left" });
+      doc
+        .font("Helvetica")
+        .fontSize(14)
+        .text(`Post By: ${post.userId.email}`, 75, 400, { align: "left" });
 
       // add Description
       doc.moveDown();
-      doc.font("Helvetica").fontSize(12).text(post.description, 75, 430, { align: "justify" });
+      doc
+        .font("Helvetica")
+        .fontSize(12)
+        .text(post.description, 75, 430, { align: "justify" });
 
       // finialize PDF file
       doc.end();
