@@ -6,7 +6,6 @@ const fs = require("fs");
 const expressPath = require("path");
 
 const fileDel = require("../utils/fileDel");
-const errorController = require("./error");
 
 exports.createPost = (req, res, next) => {
   const { title, description } = req.body;
@@ -51,7 +50,7 @@ exports.renderCreatePage = (req, res) => {
 
 exports.renderHomePage = (req, res, next) => {
   // const cookie = req.get("Cookie").split("=")[1].trim() === "true";
-  const POST_PER_PAGE = 3;
+  const POST_PER_PAGE = 6;
   const page_num = +req.query.page || 1;
   let countPost;
   Post.find()
@@ -62,7 +61,7 @@ exports.renderHomePage = (req, res, next) => {
         return res.status(404).render("error/404", { title: "Page Not Found" });
       } else {
         return Post.find()
-          .select("title description")
+          .select("title description imgUrl")
           .populate("userId", "email")
           .skip((page_num - 1) * POST_PER_PAGE)
           .limit(POST_PER_PAGE)
@@ -74,7 +73,7 @@ exports.renderHomePage = (req, res, next) => {
         return res.render("home", {
           title: "Homepage",
           postsArr: posts,
-          userEmail: req.session.userInfo ? req.session.userInfo.email : " ",
+          // userEmail: req.session.userInfo ? req.session.userInfo.email : " ",
           currentPage: page_num,
           hasNextPage: POST_PER_PAGE * page_num < countPost,
           hasPreviousPage: page_num > 1,

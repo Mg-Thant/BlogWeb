@@ -2,22 +2,26 @@
 <section class="details mx-auto roboto-medium">
   <div class="details-box">
     <h1><%= post.title %></h1>
-    <a href="/"><i class="fa-solid fa-arrow-left-long icon"></i>Go back home</a>
+    <a href="/"><i class="fa-solid fa-arrow-left-long icon"></i></a>
   </div>
-  <p class="ctl">Post By: <%= post.userId.email %></p>
+  <p class="ctl"><i class="fa-solid fa-user icon"></i><%= post.userId.email %></p>
   <% if(date) { %>
-  <p class="ctl">Upload at: <%= date %></p>
+  <p class="ctl"><i class="fa-solid fa-calendar-days icon"></i><%= date %></p>
   <% } %>
-  <a href="/save/<%= post._id %>">Save to device</a>
+  <% if(post.userId._id.toString() === loginUserId.toString()) { %>
+    <div class="details-btn">
+      <a href="/save/<%= post._id %>" class="save-btn"><i class="fa-solid fa-file-arrow-down download-icon"></i></a>
+      <div class="details-btn-inner">
+        <form action="/admin/delete/<%= post._id %>" method="post">
+          <input type="text" value="<%= csrfToken %>" name="_csrf" hidden />
+          <button><i class="fa-solid fa-trash trash-icon"></i></button>
+        </form>
+        <a href="/admin/edit/<%= post._id %>"><i class="fa-solid fa-edit edit-icon"></i></a>
+      </div>
+    </div>
+  <% } %>
   <img src="<%= '/' + post.imgUrl %>" alt="<%= post.title %>" />
   <hr />
-  <p><%= post.description %></p>
-  <% if(post.userId._id.toString() === loginUserId.toString()) { %>
-  <a href="/admin/edit/<%= post._id %>" class="btn-full">Edit</a>
-  <form action="/admin/delete/<%= post._id %>" method="post">
-    <input type="text" value="<%= csrfToken %>" name="_csrf" hidden />
-    <button>Delete</button>
-  </form>
-  <% } %>
+  <p class="roboto-regular"><%= post.description %></p>
 </section>
 <%- include("./includes/foot") %>

@@ -8,3 +8,27 @@
     <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body>
+    <nav class="roboto-medium">
+      <h1><a href="/">BLOG.IO</a></h1>
+      <div>
+        <% if(isLogin) { %>
+            <a href="/admin/create-post"
+              ><i class="fa-regular fa-square-plus icon"></i>Create Post</a
+            >
+            <a href="/admin/profile/"><i class="fa-solid fa-circle-user icon"></i> Profile</a>
+            <form action="/logout" method="post">
+              <input type="text" value="<%= csrfToken %>" name="_csrf" hidden />
+              <button class="btn">
+                <i class="fa-solid fa-arrow-right-from-bracket icon"></i>Logout
+              </button>
+            </form>
+        <% } else { %>
+            <a href="/login"
+              ><i class="fa-solid fa-user-check icon"></i>Login to existing account</a
+            >
+            <a href="/register"
+              ><i class="fa-solid fa-user-plus icon"></i>Create account</a
+            >
+        <% } %>
+      </div>
+    </nav>

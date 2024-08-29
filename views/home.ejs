@@ -1,68 +1,29 @@
 <%- include("./includes/head") %>
-<section class="header roboto-medium">
-  <h1 class="title">Blog.io</h1>
-  <p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad dignissimos
-    veniam pariatur autem. Maxime velit eos sint. Tempore quam cumque optio
-    laborum dolore commodi cum dolorem deleniti soluta, ea nemo. Lorem ipsum
-    dolor sit amet consectetur adipisicing elit. Illo libero aperiam laudantium,
-    molestiae culpa provident dicta perspiciatis qui maxime nulla vitae sapiente
-    earum beatae sint, fuga, quo nobis. Iste, soluta! Lorem ipsum dolor sit
-    amet, consectetur adipisicing elit. Hic ipsum veritatis sint cupiditate
-    tenetur iure quidem quia ipsa accusantium cumque, consequatur minima
-    adipisci rerum. Veniam ipsam doloribus nesciunt dolores fugiat.
-  </p>
-</section>
-<% if(isLogin) { %>
-<div class="header-btn roboto-medium">
-  <a href="/admin/create-post"
-    ><i class="fa-regular fa-square-plus icon"></i>Add a new post as <%=
-    userEmail ? userEmail : " " %></a
-  >
-  <form action="/logout" method="post">
-    <input type="text" value="<%= csrfToken %>" name="_csrf" hidden />
-    <button class="btn">
-      <i class="fa-solid fa-arrow-right-from-bracket icon"></i>Logout
-    </button>
-  </form>
-</div>
-<% } else { %>
-<div class="login-div roboto-medium">
-  <div>
-    <a href="/login"
-      ><i class="fa-solid fa-user-check icon"></i>Login to existing account</a
-    >
-    <a href="/register"
-      ><i class="fa-solid fa-user-plus icon"></i>Create account</a
-    >
-  </div>
-</div>
-<% } %>
-<hr />
-<h1 class="title roboto-medium">Recents Posts</h1>
+<h1 class="title roboto-medium">Posts</h1>
 <% if(postsArr.length === 0 && isLogin) { %>
 <div class="roboto-medium no-post">
   <h4>Nothing to see ?</h4>
   <p>Create a new post now !!!</p>
   <a href="/admin/create-post">Create a new post</a>
 </div>
-<% } %> <% for(let post of postsArr) { %>
+<% } %> 
 <div class="post-box roboto-medium">
-  <div class="post-inner">
-    <p class="post-title"><%= post.title %></p>
-    <p class="post-description"><%= post.description.substr(1, 500) %>...</p>
+  <% for(let post of postsArr) { %>
+  <div class="post-inner card">
+    <a href="/post/<%= post._id %>" class="post-title"><%= post.title.substr(0, 25) %></a>
+    <img src="<%= '/' + post.imgUrl %>" alt="<%=  post.title %>">
+    <p class="post-description roboto-regular"><%= post.description.substr(1, 230) %>...</p>
     <p class="post-email">Post by: <%= post.userId.email %></p>
   </div>
-  <a href="/post/<%= post._id %>">See more...</a>
+  <% } %> 
 </div>
-<% } %> 
 <hr />
 <div class="pagination">
   <% if(hasNextPage) { %>
-    <a href="/?page=<%= nextPage %>">Next Page <%= nextPage %></a>
+    <a href="/admin/profile/?page=<%= nextPage %>">Next Page <%= nextPage %></a>
   <% } %>
   <% if(hasPreviousPage) { %>
-    <a href="/?page=<%= previousPage %>">Previous Page <%= previousPage %></a>
+    <a href="/admin/profile/?page=<%= previousPage %>">Previous Page <%= previousPage %></a>
   <% } %>
 </div>
 <%- include("./includes/foot") %>
