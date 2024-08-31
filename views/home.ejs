@@ -13,17 +13,21 @@
     <a href="/post/<%= post._id %>" class="post-title"><%= post.title.substr(0, 25) %></a>
     <img src="<%= '/' + post.imgUrl %>" alt="<%=  post.title %>">
     <p class="post-description roboto-regular"><%= post.description.substr(1, 230) %>...</p>
-    <p class="post-email">Post by: <%= post.userId.email %></p>
+    <% if(post.userId._id.toString() === currentUserId.toString()) { %>
+      <p class="post-email">Post by: <a href="/admin/profile"><%= post.userId.email %></a></p>
+    <% } else { %>
+      <p class="post-email">Post by: <a href="/profile/<%= post.userId._id %>"><%= post.userId.email %></a></p>
+    <% } %>
   </div>
   <% } %> 
 </div>
 <hr />
 <div class="pagination">
   <% if(hasNextPage) { %>
-    <a href="/admin/profile/?page=<%= nextPage %>">Next Page <%= nextPage %></a>
+    <a href="/?page=<%= nextPage %>">Next Page <%= nextPage %></a>
   <% } %>
   <% if(hasPreviousPage) { %>
-    <a href="/admin/profile/?page=<%= previousPage %>">Previous Page <%= previousPage %></a>
+    <a href="/?page=<%= previousPage %>">Previous Page <%= previousPage %></a>
   <% } %>
 </div>
 <%- include("./includes/foot") %>

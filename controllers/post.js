@@ -79,6 +79,7 @@ exports.renderHomePage = (req, res, next) => {
           hasPreviousPage: page_num > 1,
           nextPage: page_num + 1,
           previousPage: page_num - 1,
+          currentUserId: req.session.userInfo ? req.session.userInfo._id : "",
         });
       }
     })

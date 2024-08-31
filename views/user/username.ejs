@@ -1,18 +1,18 @@
 <%- include("../includes/head") %>
     <section class="mx-auto roboto-medium">
-      <h1 class="title">Reset password here...</h1>
+      <h1 class="title">Set Username</h1>
       <% if(errorMsg) { %>
         <p class="error-msg"><%= errorMsg %></p>
       <% } %>
-      <form action="/reset" method="post" novalidate>
+      <form action="/admin/set-username" method="post" novalidate>
         <div class="form-box">
           <input type="text" value="<%= csrfToken %>" name="_csrf" hidden>
           <div class="bd-ctl">
-            <label for="email">Enter email</label>
-            <input type="email" id="email" name="email" value="<%= oldData.email %>"/>
+            <label for="username">Enter Username</label>
+            <input type="text" id="username" name="username" value="<%= oldData %>" />
           </div>
         </div>
-        <button>Reset password</button>
+        <button>Set Username</button>
       </form>
     </section>
   </body>

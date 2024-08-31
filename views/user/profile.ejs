@@ -1,25 +1,42 @@
 <%- include("../includes/head") %>
 <section class="profile roboto-medium">
-    <h1><%= userEmail %></h1>
-    <div class="post-box roboto-medium">
-        <% for(let post of postsArr) { %>
-        <div class="post-inner card">
-          <a href="/post/<%= post._id %>" class="post-title"><%= post.title.substr(0, 25) %></a>
-          <img src="<%= '/' + post.imgUrl %>" alt="<%=  post.title %>">
-          <p class="post-description roboto-regular"><%= post.description.substr(1, 230) %>...</p>
-          <p class="post-email">Post by: <%= post.userId.email %></p>
-        </div>
-        <% } %> 
-      </div>
-      <hr />
-      <div class="pagination">
-        <% if(hasNextPage) { %>
-          <a href="/?page=<%= nextPage %>">Next Page <%= nextPage %></a>
-        <% } %>
-        <% if(hasPreviousPage) { %>
-          <a href="/?page=<%= previousPage %>">Previous Page <%= previousPage %></a>
-        <% } %>
-      </div>
+  <div class="profile-inner">
+    <div class="profile-inner-lt">
+      <i class="fa-solid fa-circle-user icon "></i>
+      <p><%= userEmail %></p>
+      <% if(postsArr[0].userId.username) { %>
+        <p>Username: <%= postsArr[0].userId.username %></p>
+      <% } %>
+    </div>
+    <div class="profile-inner-rt">
+      <a href="/admin/username">Set Username</a>
+      <a href="/admin/premium">Buy Premium</a>
+    </div>
+  </div>
+  <div class="post-box roboto-medium">
+    <% for(let post of postsArr) { %>
+    <div class="post-inner card">
+      <a href="/post/<%= post._id %>" class="post-title"
+        ><%= post.title.substr(0, 25) %></a
+      >
+      <img src="<%= '/' + post.imgUrl %>" alt="<%=  post.title %>" />
+      <p class="post-description roboto-regular">
+        <%= post.description.substr(1, 230) %>...
+      </p>
+      <p class="post-email">Post by: <%= post.userId.email %></p>
+    </div>
+    <% } %>
+  </div>
+  <hr />
+  <div class="pagination">
+    <% if(hasNextPage) { %>
+    <a href="/admin/profile/?page=<%= nextPage %>">Next Page <%= nextPage %></a>
+    <% } %> <% if(hasPreviousPage) { %>
+    <a href="/admin/profile/?page=<%= previousPage %>"
+      >Previous Page <%= previousPage %></a
+    >
+    <% } %>
+  </div>
 </section>
 
 <%- include("../includes/foot") %>

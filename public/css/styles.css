@@ -195,6 +195,12 @@ button {
   font-size: 20px;
 }
 
+.post-email a {
+  background-color: transparent;
+  color: #000;
+  padding: 0;
+}
+
 .details {
   width: 65%;
 }
@@ -345,11 +351,12 @@ input {
 .bd-ctl input {
   border: 1px solid #000;
   padding: 8px 5px;
-  width: 102%;
+  width: 104%;
 }
 
 .bd-ctl ~ div textarea, .bd-ctl input {
   margin: 4px 0 0 0;
+  width: 104%;
 }
 
 .pagination {
@@ -364,4 +371,84 @@ input {
   text-align: center;
   font-size: 32px;
   margin: 18px 0;
+}
+
+.profile .profile-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 40px;
+}
+
+.profile .profile-inner .profile-inner-lt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile .profile-inner .profile-inner-lt i, .profile .public-profile i {
+  font-size: 75px;
+}
+
+.profile .profile-inner .profile-inner-rt a {
+  width: 100%;
+  text-align: center;
+}
+
+.profile .public-profile {
+  margin: auto;
+  width: fit-content;
+}
+
+.profile .public-profile i {
+  width: 100%;
+  text-align: center;
+  margin: 25px 0 0 0;
+}
+
+.profile .profile-inner-lt p, .profile .public-profile p {
+  text-align: center;
+  margin: 8px 0 0 0;
+}
+
+.premium {
+  width: 60%;
+  margin: 95px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.premium-card {
+  height: 350px;
+  padding: 20px;
+  border: 1px solid #000;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: normal;
+}
+
+.premium-card h3 {
+  font-size: 24px;
+  text-align: center;
+}
+
+.premium-card ul li {
+  margin: 12px 0 10px 16px;
+  font-size: 22px;
+}
+
+.premium-card div {
+  background-color: #000;
+  color: #fff;
+  padding: 8px 10px;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  margin: 16px 0 0 0;
+  text-align: center;
 }
