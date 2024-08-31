@@ -18,6 +18,13 @@ const userSchema = new Schema({
     minLength: 3,
     unique: true,
   },
+  isPremium: {
+    type : Boolean,
+    defauls : false
+  },
+  payment_session_id_key: {
+    type: String
+  },
   resetToken: String,
   tokenExp: Date,
 });

@@ -7,8 +7,18 @@
             <li>Animate profile badge</li>
             <li>Can setusername unlimited</li>
         </ul>
-        <div>Buy Premium</div>
+        <button class="checkout-btn">Buy Premium</button>
       </div>
     </section>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        let stripe = Stripe("pk_test_51PtoUa043ghtzEKjMO21ySGqSg0X5nWPRCT9AwbfaFKDkRg1WFvvPTDsXRCnamjlrujqgg5JwQZI0BvP5IyQXYPJ00IOvrdp25");
+        let checkoutBtn = document.getElementsByClassName("checkout-btn")[0];
+        checkoutBtn.addEventListener("click", () => {
+            stripe.redirectToCheckout({
+                sessionId : "<%= session_id %>"
+            })
+        })
+    </script>
   </body>
 <%- include("../includes/foot") %>

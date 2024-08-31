@@ -401,7 +401,7 @@ input {
   width: fit-content;
 }
 
-.profile .public-profile i {
+.profile .public-profile .circle-user-ic {
   width: 100%;
   text-align: center;
   margin: 25px 0 0 0;
@@ -441,7 +441,7 @@ input {
   font-size: 22px;
 }
 
-.premium-card div {
+.premium-card button {
   background-color: #000;
   color: #fff;
   padding: 8px 10px;
@@ -451,4 +451,23 @@ input {
   border-radius: 4px;
   margin: 16px 0 0 0;
   text-align: center;
+}
+
+.profile .public-profile .public-profile-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+}
+
+.profile .profile-inner .profile-inner-lt .star-icon, .profile .public-profile .star-icon {
+  width: fit-contents;
+  font-size: 18px;
+  background: linear-gradient(135deg, #37aee2, #8b79f6, #ffbdbf);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.profile .public-profile .star-icon {
+  margin-left: 4px;
 }

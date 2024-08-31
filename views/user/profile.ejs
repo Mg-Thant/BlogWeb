@@ -5,7 +5,12 @@
       <i class="fa-solid fa-circle-user icon "></i>
       <p><%= userEmail %></p>
       <% if(postsArr[0].userId.username) { %>
-        <p>Username: <%= postsArr[0].userId.username %></p>
+        <p>
+          Username: <%= postsArr[0].userId.username %>
+          <% if(postsArr[0].userId.isPremium) { %>
+            <i class="fa-solid fa-star star-icon animate__animated animate__jello animate__infinite"></i>
+          <% } %>
+        </p>
       <% } %>
     </div>
     <div class="profile-inner-rt">

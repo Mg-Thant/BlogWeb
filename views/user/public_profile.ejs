@@ -1,11 +1,17 @@
 <%- include("../includes/head") %>
 <section class="profile roboto-medium">
     <div class="public-profile">
-        <i class="fa-solid fa-circle-user"></i>
+        <i class="fa-solid fa-circle-user circle-user-ic"></i>
         <p><%= userEmail %></p>
-        <% if(postsArr[0].userId.username) { %>
-          <p>Username: <%= postsArr[0].userId.username %></p>
-        <% } %>
+          <% if(postsArr[0].userId.username) { %>
+            <div class="public-profile-inner">
+              Username: <%= postsArr[0].userId.username %>
+              <% if(postsArr[0].userId.isPremium) { %>
+                <i class="fa-solid fa-star star-icon animate__animated animate__jello animate__infinite"></i>
+              <% } %>
+            </>
+          <% } %>
+        </div>
     </div>
     <div class="post-box roboto-medium">
         <% for(let post of postsArr) { %>
