@@ -161,7 +161,7 @@ button {
 .post-inner {
   border: 1px solid black;
   width: calc(25% + 4.8rem);
-  height: fit-content;
+  height: calc(36rem);
   padding: 18px 12px;
   margin: 0 18px;
 }
@@ -460,7 +460,7 @@ input {
   width: 250px;
 }
 
-.profile .profile-inner .profile-inner-lt .star-icon, .profile .public-profile .star-icon {
+.profile .profile-inner .profile-inner-lt .star-icon, .profile .public-profile .star-icon, .head-handler .username-ic .star-icon {
   width: fit-contents;
   font-size: 18px;
   background: linear-gradient(135deg, #37aee2, #8b79f6, #ffbdbf);
@@ -470,4 +470,56 @@ input {
 
 .profile .public-profile .star-icon {
   margin-left: 4px;
+}
+
+.head-handler {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 7px;
+  margin-bottom: 18px;
+  margin-top: 12px;
+}
+
+.head-handler i:not(.star-icon) {
+  font-size: 35px;
+}
+
+.username-ic {
+  display: flex;
+  justify-content: center;
+}
+
+.p-details {
+  width: 450px;
+  background-color: #f6eee3;
+  padding: 12px 18px;
+  margin-top: 5rem;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+}
+
+.p-details h1 {
+  font-size: 32px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.p-details p {
+  margin-bottom: 18px;
+}
+
+.p-details span {
+  font-weight: bold;
+}
+
+.p-details .p-status {
+  background-color: #059403;
+  color: #fff;
+  text-transform: capitalize;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  padding: 4px 6px;
 }

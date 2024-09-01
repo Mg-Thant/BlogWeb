@@ -16,6 +16,18 @@
     <div class="post-box roboto-medium">
         <% for(let post of postsArr) { %>
         <div class="post-inner card">
+          <div class="head-handler">
+            <% if(post.userId.username) { %>
+            <i class="fa-solid fa-circle-user"></i>
+            <div class="username-ic">
+              <%= post.userId.username %> <% if(post.userId.isPremium) { %>
+              <i
+                class="fa-solid fa-star star-icon animate__animated animate__jello animate__infinite"
+              ></i>
+              <% } %>
+            </div>
+            <% } %>
+          </div>
           <a href="/post/<%= post._id %>" class="post-title"><%= post.title.substr(0, 25) %></a>
           <img src="<%= '/' + post.imgUrl %>" alt="<%=  post.title %>">
           <p class="post-description roboto-regular"><%= post.description.substr(1, 230) %>...</p>

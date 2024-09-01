@@ -62,7 +62,7 @@ exports.renderHomePage = (req, res, next) => {
       } else {
         return Post.find()
           .select("title description imgUrl")
-          .populate("userId", "email")
+          .populate("userId", "email isPremium username")
           .skip((page_num - 1) * POST_PER_PAGE)
           .limit(POST_PER_PAGE)
           .sort({ createdAt: -1 });
@@ -93,7 +93,7 @@ exports.renderHomePage = (req, res, next) => {
 exports.getPost = (req, res, next) => {
   const postId = req.params.postId;
   Post.findById(postId)
-    .populate("userId", "email")
+    .populate("userId", "email isPremium")
     .then((post) => {
       res.render("details", {
         title: post.title,
@@ -102,6 +102,7 @@ exports.getPost = (req, res, next) => {
           ? formatISO9075(post.createdAt, { representation: "date" })
           : undefined,
         loginUserId: req.session.userInfo ? req.session.userInfo._id : " ",
+        loginUserStatus: req.session.userInfo ? req.session.userInfo.isPremium : false,
       });
     })
     .catch((err) => {

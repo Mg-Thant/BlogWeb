@@ -8,16 +8,18 @@
   <% if(date) { %>
   <p class="ctl"><i class="fa-solid fa-calendar-days icon"></i><%= date %></p>
   <% } %>
-  <% if(post.userId._id.toString() === loginUserId.toString()) { %>
+  <% if(loginUserStatus) { %>
     <div class="details-btn">
       <a href="/save/<%= post._id %>" class="save-btn"><i class="fa-solid fa-file-arrow-down download-icon"></i></a>
-      <div class="details-btn-inner">
-        <form action="/admin/delete/<%= post._id %>" method="post">
-          <input type="text" value="<%= csrfToken %>" name="_csrf" hidden />
-          <button><i class="fa-solid fa-trash trash-icon"></i></button>
-        </form>
-        <a href="/admin/edit/<%= post._id %>"><i class="fa-solid fa-edit edit-icon"></i></a>
-      </div>
+      <% if(post.userId._id.toString() === loginUserId.toString()) { %>
+        <div class="details-btn-inner">
+          <form action="/admin/delete/<%= post._id %>" method="post">
+            <input type="text" value="<%= csrfToken %>" name="_csrf" hidden />
+            <button><i class="fa-solid fa-trash trash-icon"></i></button>
+          </form>
+          <a href="/admin/edit/<%= post._id %>"><i class="fa-solid fa-edit edit-icon"></i></a>
+        </div>
+      <% } %>
     </div>
   <% } %>
   <img src="<%= '/' + post.imgUrl %>" alt="<%= post.title %>" />

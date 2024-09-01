@@ -1,0 +1,13 @@
+<%- include("../includes/head") %>
+    <section class="mx-auto roboto-medium p-details">
+      <h1>Premium Details</h1>
+      <p> <span>Customer ID:</span> <%= customer_id ? customer_id : "None" %></p>
+      <p> <span>Name:</span> <%= name ? name : "None" %></p>
+      <p> <span>Email:</span> <%= email ? email : "None" %></p>
+      <p> <span>Country:</span> <%= country ? country : "None" %></p>
+      <p> <span>Postal Code:</span> <%= postal_code ? postal_code : "None" %></p>
+      <p> <span>Invoice ID:</span> <%= invoice_id ? invoice_id : "None" %></p>
+      <p> <span>Payment Status:</span> <span class="p-status"><%= payment_status ? payment_status : "None" %></span></p>
+    </section>
+  </body>
+<%- include("../includes/foot") %>
