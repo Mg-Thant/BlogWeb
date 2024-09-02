@@ -1,7 +1,11 @@
 <%- include("../includes/head") %>
 <section class="profile roboto-medium">
     <div class="public-profile">
-        <i class="fa-solid fa-circle-user circle-user-ic"></i>
+      <% if(postsArr[0].userId.isPremium && postsArr[0].userId.profile_img) { %>
+        <img src="<%= '/' + postsArr[0].userId.profile_img %>" alt="<%= postsArr[0].userId.username %>" class="profile-img">
+      <% } else { %>
+        <i class="fa-solid fa-circle-user icon "></i>
+      <% } %>
         <p><%= userEmail %></p>
           <% if(postsArr[0].userId.username) { %>
             <div class="public-profile-inner">

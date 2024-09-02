@@ -1,10 +1,11 @@
 const express = require("express");
-
-const router = express.Router();
-const postController = require("../controllers/post");
-const userController = require("../controllers/user");
 const { body } = require("express-validator");
 
+const postController = require("../controllers/post");
+const userController = require("../controllers/user");
+const { isPremium } = require("../middleware/isPremium");
+
+const router = express.Router();
 // /admin/create-post
 router.get("/create-post", postController.renderCreatePage);
 
@@ -50,5 +51,7 @@ router.get("/premium", userController.renderPremiumPage);
 router.get("/subscription-success", userController.renderSubSuccessPage);
 router.get("/subscriptio-cancel", userController.renderPremiumPage);
 router.get("/premium-details", userController.getPremiumDetails);
+router.get("/profile-image", isPremium, userController.renderProfileUploadPage);
+router.post("/set_profile", isPremium, userController.setProfileImage);
 
 module.exports = router;

@@ -1,0 +1,19 @@
+<%- include("../includes/head") %>
+    <section class="mx-auto roboto-medium">
+      <h1 class="title">Upload Profile</h1>
+      <% if(errorMsg) { %>
+        <p class="error-msg"><%= errorMsg %></p>
+      <% } %>
+      <form action="/admin/set_profile" method="post" enctype="multipart/form-data">
+        <div class="form-box">
+          <input type="text" value="<%= csrfToken %>" name="_csrf" hidden>
+          <div class="bd-ctl">
+            <label for="photo">Enter Profile Image</label>
+            <input type="file" id="photo" name="photo" />
+          </div>
+        </div>
+        <button>Upload Image</button>
+      </form>
+    </section>
+  </body>
+<%- include("../includes/foot") %>

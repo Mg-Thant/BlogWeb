@@ -1,6 +1,7 @@
 exports.isPremium = (req, res, next) => {
-    if(!req.session.usesInfo.isPremium) {
-        return res.redirect("/");
+    // req.user.isPremium
+    if(!req.session.userInfo.isPremium) {
+        return res.redirect("/admin/premium");
     }
     next();
 }

@@ -1,62 +1,75 @@
 <%- include("../includes/head") %>
 <section class="profile roboto-medium">
-  <div class="profile-inner">
-    <div class="profile-inner-lt">
-      <i class="fa-solid fa-circle-user icon "></i>
-      <p><%= userEmail %></p>
-      <% if(postsArr[0].userId.username) { %>
-        <p>
-          Username: <%= postsArr[0].userId.username %>
-          <% if(postsArr[0].userId.isPremium) { %>
-            <i class="fa-solid fa-star star-icon animate__animated animate__jello animate__infinite"></i>
-          <% } %>
-        </p>
-      <% } %>
-    </div>
-    <div class="profile-inner-rt">
-      <a href="/admin/username">Set Username</a>
-      <% if(postsArr[0].userId.isPremium) { %>
-        <a href="/admin/premium-details">Premium Details</a>
-      <% } else { %>
-        <a href="/admin/premium">Buy Premium</a>
-      <% } %>
-    </div>
-  </div>
-  <div class="post-box roboto-medium">
-    <% for(let post of postsArr) { %>
-    <div class="post-inner card">
-      <div class="head-handler">
-        <% if(post.userId.username) { %>
-        <i class="fa-solid fa-circle-user"></i>
-        <div class="username-ic">
-          <%= post.userId.username %> <% if(post.userId.isPremium) { %>
-          <i
-            class="fa-solid fa-star star-icon animate__animated animate__jello animate__infinite"
-          ></i>
-          <% } %>
-        </div>
+  <% if(postsArr.length > 0) { %>
+    <div class="profile-inner">
+      <div class="profile-inner-lt">
+        <% if(postsArr[0].userId.isPremium && postsArr[0].userId.profile_img) { %>
+          <img src="<%= '/' + postsArr[0].userId.profile_img %>" alt="<%= postsArr[0].userId.username %>" class="profile-img">
+        <% } else { %>
+          <i class="fa-solid fa-circle-user icon "></i>
+        <% } %>
+        <p><%= userEmail %></p>
+        <% if(postsArr[0].userId.username) { %>
+          <p>
+            Username: <%= postsArr[0].userId.username %>
+            <% if(postsArr[0].userId.isPremium) { %>
+              <i class="fa-solid fa-star star-icon animate__animated animate__jello animate__infinite"></i>
+            <% } %>
+          </p>
         <% } %>
       </div>
-      <a href="/post/<%= post._id %>" class="post-title"
-        ><%= post.title.substr(0, 25) %></a
-      >
-      <img src="<%= '/' + post.imgUrl %>" alt="<%=  post.title %>" />
-      <p class="post-description roboto-regular">
-        <%= post.description.substr(1, 230) %>...
-      </p>
+      <div class="profile-inner-rt">
+        <a href="/admin/username">Set Username</a>
+        <% if(postsArr[0].userId.isPremium) { %>
+          <a href="/admin/profile-image">Upload Profile</a>
+          <a href="/admin/premium-details">Premium Details</a>
+        <% } else { %>
+          <a href="/admin/premium">Buy Premium</a>
+        <% } %>
+      </div>
     </div>
-    <% } %>
-  </div>
-  <hr />
-  <div class="pagination">
-    <% if(hasNextPage) { %>
-    <a href="/admin/profile/?page=<%= nextPage %>">Next Page <%= nextPage %></a>
-    <% } %> <% if(hasPreviousPage) { %>
-    <a href="/admin/profile/?page=<%= previousPage %>"
-      >Previous Page <%= previousPage %></a
-    >
-    <% } %>
-  </div>
+    <div class="post-box roboto-medium">
+      <% for(let post of postsArr) { %>
+      <div class="post-inner card">
+        <div class="head-handler">
+          <% if(post.userId.username) { %>
+          <i class="fa-solid fa-circle-user"></i>
+          <div class="username-ic">
+            <%= post.userId.username %> <% if(post.userId.isPremium) { %>
+            <i
+              class="fa-solid fa-star star-icon animate__animated animate__jello animate__infinite"
+            ></i>
+            <% } %>
+          </div>
+          <% } %>
+        </div>
+        <a href="/post/<%= post._id %>" class="post-title"
+          ><%= post.title.substr(0, 25) %></a
+        >
+        <img src="<%= '/' + post.imgUrl %>" alt="<%=  post.title %>" /> 
+        <p class="post-description roboto-regular">
+          <%= post.description.substr(1, 230) %>...
+        </p>
+      </div>
+      <% } %>
+    </div>
+    <hr />
+    <div class="pagination">
+      <% if(hasNextPage) { %>
+      <a href="/admin/profile/?page=<%= nextPage %>">Next Page <%= nextPage %></a>
+      <% } %> <% if(hasPreviousPage) { %>
+      <a href="/admin/profile/?page=<%= previousPage %>"
+        >Previous Page <%= previousPage %></a
+      >
+      <% } %>
+    </div>
+  <% } else { %>
+    <div class="roboto-medium no-post">
+      <h4>You don't have a post</h4>
+      <p>Create a new post now !!!</p>
+      <a href="/admin/create-post">Create a new post</a>
+    </div>
+  <% } %>
 </section>
 
 <%- include("../includes/foot") %>

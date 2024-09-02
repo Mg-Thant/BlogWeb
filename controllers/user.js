@@ -15,28 +15,30 @@ exports.getProfile = (req, res, next) => {
     .countDocuments()
     .then((totalPost) => {
       countPost = totalPost;
-      if (page_num > countPost) {
-        return res.status(404).render("error/404", { title: "Page Not Found" });
-      } else {
-        return Post.find({ userId: req.session.userInfo._id })
-          .populate("userId", "email username isPremium")
-          .skip((page_num - 1) * POST_PER_PAGE)
-          .limit(POST_PER_PAGE)
-          .sort({ createdAt: -1 });
-      }
+      return Post.find({ userId: req.session.userInfo._id })
+        .populate("userId", "email username isPremium profile_img")
+        .skip((page_num - 1) * POST_PER_PAGE)
+        .limit(POST_PER_PAGE)
+        .sort({ createdAt: -1 });
     })
     .then((posts) => {
       if (!res.headersSent) {
-        return res.render("user/profile", {
-          title: "Profile",
-          postsArr: posts,
-          currentPage: page_num,
-          hasNextPage: POST_PER_PAGE * page_num < countPost,
-          hasPreviousPage: page_num > 1,
-          nextPage: page_num + 1,
-          previousPage: page_num - 1,
-          userEmail: req.session.userInfo ? req.session.userInfo.email : " ",
-        });
+        if (posts.length > 0 || page_num === 1) {
+          return res.render("user/profile", {
+            title: "Profile",
+            postsArr: posts,
+            currentPage: page_num,
+            hasNextPage: POST_PER_PAGE * page_num < countPost,
+            hasPreviousPage: page_num > 1,
+            nextPage: page_num + 1,
+            previousPage: page_num - 1,
+            userEmail: req.session.userInfo ? req.session.userInfo.email : " ",
+          });
+        } else {
+          return res
+            .status(404)
+            .render("error/404", { title: "Page Not Found" });
+        }
       }
     })
     .catch((err) => {
@@ -59,7 +61,7 @@ exports.getPublicProfile = (req, res, next) => {
         return res.status(404).render("error/404", { title: "Page Not Found" });
       } else {
         return Post.find({ userId: id })
-          .populate("userId", "email username isPremium")
+          .populate("userId", "email username isPremium profile_img")
           .skip((page_num - 1) * POST_PER_PAGE)
           .limit(POST_PER_PAGE)
           .sort({ createdAt: -1 });
@@ -205,8 +207,54 @@ exports.getPremiumDetails = (req, res, next) => {
         email: stripe_session.customer_details.address.email,
         name: stripe_session.customer_details.name,
         invoice_id: stripe_session.invoice,
-        payment_status: stripe_session.payment_status
+        payment_status: stripe_session.payment_status,
       });
+    })
+    .catch((err) => {
+      console.log(err);
+      const error = new Error("Something Went Wrong");
+      return next(error);
+    });
+};
+
+exports.renderProfileUploadPage = (req, res) => {
+  let err_message = req.flash("error");
+  if (err_message.length > 0) {
+    err_message = err_message[0];
+  } else {
+    err_message = null;
+  }
+  res.render("user/profile_upload", {
+    title: "Upload Profile",
+    errorMsg: err_message,
+  });
+};
+
+exports.setProfileImage = (req, res, next) => {
+  const image = req.file;
+  const errors = validationResult(req);
+
+  if (image === undefined) {
+    return res.status(422).render("user/profile_upload", {
+      title: "Upload Profile",
+      errorMsg: "Image extension must be jpg, jpeg and png",
+    });
+  }
+
+  if (!errors.isEmpty()) {
+    return res.status(422).render("user/profile_upload", {
+      title: "Upload Profile",
+      errorMsg: errors.array()[0].msg,
+    });
+  }
+
+  User.findById(req.user._id)
+    .then((user) => {
+      user.profile_img = image.path;
+      return user.save();
+    })
+    .then(() => {
+      res.redirect("/admin/profile");
     })
     .catch((err) => {
       console.log(err);

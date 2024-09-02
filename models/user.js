@@ -25,6 +25,7 @@ const userSchema = new Schema({
   payment_session_id_key: {
     type: String
   },
+  profile_img: String,
   resetToken: String,
   tokenExp: Date,
 });

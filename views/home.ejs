@@ -12,7 +12,11 @@
   <div class="post-inner card">
     <div class="head-handler">
       <% if(post.userId.username) { %>
-      <i class="fa-solid fa-circle-user"></i>
+        <% if(post.userId.isPremium && post.userId.profile_img) { %>
+          <img src="<%= '/' + post.userId.profile_img %>" alt="<%= post.userId.username %>" class="home-profile-img">
+        <% } else { %>
+          <i class="fa-solid fa-circle-user icon "></i>
+        <% } %>
       <div class="username-ic">
         <%= post.userId.username %> <% if(post.userId.isPremium) { %>
         <i
@@ -22,10 +26,10 @@
       </div>
       <% } %>
     </div>
+    <img src="<%= '/' + post.imgUrl %>" alt="<%=  post.title %>" />
     <a href="/post/<%= post._id %>" class="post-title"
       ><%= post.title.substr(0, 25) %></a
     >
-    <img src="<%= '/' + post.imgUrl %>" alt="<%=  post.title %>" />
     <p class="post-description roboto-regular">
       <%= post.description.substr(1, 230) %>...
     </p>
