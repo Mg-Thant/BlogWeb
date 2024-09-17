@@ -20,7 +20,7 @@ const userSchema = new Schema({
   },
   isPremium: {
     type : Boolean,
-    defauls : false
+    default : false
   },
   payment_session_id_key: {
     type: String

@@ -19,7 +19,7 @@
         <% } %>
       </div>
       <div class="profile-inner-rt">
-        <a href="/admin/username">Set Username</a>
+        <a href="/admin/username"><%= postsArr[0].userId.username ? "Update Username" : "Set Username" %></a>
         <% if(postsArr[0].userId.isPremium) { %>
           <a href="/admin/profile-image">Upload Profile</a>
           <a href="/admin/premium-details">Premium Details</a>

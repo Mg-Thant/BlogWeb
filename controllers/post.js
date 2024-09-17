@@ -69,7 +69,7 @@ exports.renderHomePage = (req, res, next) => {
       }
     })
     .then((posts) => {
-      if(!res.headersSent) {
+      if (!res.headersSent) {
         return res.render("home", {
           title: "Homepage",
           postsArr: posts,
@@ -102,7 +102,9 @@ exports.getPost = (req, res, next) => {
           ? formatISO9075(post.createdAt, { representation: "date" })
           : undefined,
         loginUserId: req.session.userInfo ? req.session.userInfo._id : " ",
-        loginUserStatus: req.session.userInfo ? req.session.userInfo.isPremium : false,
+        loginUserStatus: req.session.userInfo
+          ? req.session.userInfo.isPremium
+          : false,
       });
     })
     .catch((err) => {
