@@ -11,12 +11,32 @@
   <% for(let post of postsArr) { %>
   <div class="post-inner card">
     <div class="head-handler">
-      <% if(post.userId.username) { %>
-        <% if(post.userId.isPremium && post.userId.profile_img) { %>
-          <img src="<%= '/' + post.userId.profile_img %>" alt="<%= post.userId.username %>" class="home-profile-img">
+      <% if(post.userId.username) { %> <% if(post.userId._id.toString() ===
+      currentUserId.toString()) { %>
+      <a href="/admin/profile"
+        ><% if(post.userId.isPremium && post.userId.profile_img) { %>
+        <img
+          src="<%= '/' + post.userId.profile_img %>"
+          alt="<%= post.userId.username %>"
+          class="home-profile-img"
+        />
         <% } else { %>
-          <i class="fa-solid fa-circle-user icon "></i>
-        <% } %>
+        <i class="fa-solid fa-circle-user icon"></i>
+        <% } %></a
+      >
+      <% } else { %>
+      <a href="/profile/<%= post.userId._id %>"
+        ><% if(post.userId.isPremium && post.userId.profile_img) { %>
+        <img
+          src="<%= '/' + post.userId.profile_img %>"
+          alt="<%= post.userId.username %>"
+          class="home-profile-img"
+        />
+        <% } else { %>
+        <i class="fa-solid fa-circle-user icon"></i>
+        <% } %></a
+      >
+      <% } %>
       <div class="username-ic">
         <%= post.userId.username %> <% if(post.userId.isPremium) { %>
         <i
@@ -33,17 +53,6 @@
     <p class="post-description roboto-regular">
       <%= post.description.substr(1, 230) %>...
     </p>
-    <% if(post.userId._id.toString() === currentUserId.toString()) { %>
-    <p class="post-email">
-      Post by:
-      <a href="/admin/profile"><%= post.userId.email %></a>
-    </p>
-    <% } else { %>
-    <p class="post-email">
-      Post by:
-      <a href="/profile/<%= post.userId._id %>"><%= post.userId.email %></a>
-    </p>
-    <% } %>
   </div>
   <% } %>
 </div>

@@ -4,14 +4,16 @@
       <% if(postsArr[0].userId.isPremium && postsArr[0].userId.profile_img) { %>
         <img src="<%= '/' + postsArr[0].userId.profile_img %>" alt="<%= postsArr[0].userId.username %>" class="profile-img">
       <% } else { %>
-        <i class="fa-solid fa-circle-user icon "></i>
+        <div>
+          <i class="fa-solid fa-circle-user icon "></i>
+        </div>
       <% } %>
         <p><%= userEmail %></p>
           <% if(postsArr[0].userId.username) { %>
             <div class="public-profile-inner">
               Username: <%= postsArr[0].userId.username %>
               <% if(postsArr[0].userId.isPremium) { %>
-                <i class="fa-solid fa-star star-icon animate__animated animate__jello animate__infinite"></i>
+                  <i class="fa-solid fa-star star-icon animate__animated animate__jello animate__infinite"></i>
               <% } %>
             </>
           <% } %>
@@ -22,7 +24,11 @@
         <div class="post-inner card">
           <div class="head-handler">
             <% if(post.userId.username) { %>
-            <i class="fa-solid fa-circle-user"></i>
+            <% if(post.userId.isPremium) { %>
+              <img src="<%= '/' + postsArr[0].userId.profile_img %>" alt="<%= postsArr[0].userId.username %>" class="card-profile">
+            <% } else { %>
+              <i class="fa-solid fa-circle-user"></i>
+            <% } %>
             <div class="username-ic">
               <%= post.userId.username %> <% if(post.userId.isPremium) { %>
               <i

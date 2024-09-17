@@ -68,7 +68,7 @@ nav div {
   font-size: 22px;
 }
 
-a:not(.post-title) {
+a:not(.post-title, .head-handler a) {
   display: block;
   margin: 10px 0;
   color: #fff;
@@ -161,7 +161,7 @@ button {
 .post-inner {
   border: 1px solid black;
   width: calc(25% + 4.8rem);
-  height: calc(36.5rem);
+  height: calc(34.5rem);
   padding: 18px 12px;
   margin: 0 18px;
 }
@@ -239,13 +239,9 @@ button {
 
 .details .details-btn, .details .details-btn .details-btn-inner {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   gap: 8px;
-}
-
-.details .details-btn .details-btn-inner {
-  justify-content: space-around;
 }
 
 .details .edit-icon, .details .trash-icon, .details .download-icon {
@@ -403,6 +399,11 @@ input {
   margin: 18px auto 0;
 }
 
+.profile .profile-inner .profile-inner-lt i, .profile .public-profile div {
+  width: fit-content;
+  margin: 0 auto;
+}
+
 .profile .profile-inner .profile-inner-lt i, .profile .public-profile i {
   font-size: 75px;
 }
@@ -411,6 +412,7 @@ input {
   width: 100%;
   text-align: center;
 }
+
 
 .profile .public-profile {
   margin: auto;
@@ -495,6 +497,14 @@ input {
   height: 7px;
   margin-bottom: 24px;
   margin-top: 14px;
+}
+
+.post-inner .head-handler .card-profile {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .head-handler i:not(.star-icon) {

@@ -33,7 +33,11 @@
       <div class="post-inner card">
         <div class="head-handler">
           <% if(post.userId.username) { %>
-          <i class="fa-solid fa-circle-user"></i>
+            <% if(post.userId.isPremium) { %>
+              <img src="<%= '/' + postsArr[0].userId.profile_img %>" alt="<%= postsArr[0].userId.username %>" class="card-profile">
+            <% } else { %>
+              <i class="fa-solid fa-circle-user"></i>
+            <% } %>
           <div class="username-ic">
             <%= post.userId.username %> <% if(post.userId.isPremium) { %>
             <i
